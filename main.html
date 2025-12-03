@@ -8,13 +8,13 @@
         body {font-family: Arial, sans-serif; margin: 40px; background: #f4f4f4;}
         h1 {text-align: center;}
         .form-group {max-width: 500px; margin: 0 auto 30px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
-        input {width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box;}
-        #anti {background:#28a745; color:white; padding:10px 20px; border:none; cursor:pointer;}
-        #anti:hover {background:#218838;}
-        table {width: 100%; max-width: 800px; margin: 0 auto; border-collapse: collapse; background: white;}
+        input {width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;}
+        #submit {background:#28a745; color:white; padding:10px 20px; border:none; cursor:pointer; border-radius:4px;}
+        #submit:hover {background:#218838;}
+        table {width: 100%; max-width: 800px; margin: 0 auto; border-collapse: collapse; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
         th, td {padding: 12px; text-align: left; border-bottom: 1px solid #ddd;}
         th {background:#007bff; color:white;}
-        .delete {background:#dc3545; color:white; border:none; padding:6px 12px; cursor:pointer;}
+        .delete {background:#dc3545; color:white; border:none; padding:6px 12px; cursor:pointer; border-radius:4px;}
         .delete:hover {background:#c82333;}
     </style>
 </head>
@@ -38,20 +38,20 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody id="book-list">
-            <!-- rows will be added here -->
-        </tbody>
+        <tbody id="book-list"></tbody>
     </table>
 
     <script>
-        document.getElementById('anti').addEventListener('click', function () {
+        document.getElementById('submit').addEventListener('click', function(e) {
+            e.preventDefault(); 
+
             const title = document.getElementById('title').value.trim();
             const author = document.getElementById('author').value.trim();
             const isbn = document.getElementById('isbn').value.trim();
 
-            if (title === '' || author === '' || isbn === '') return;
+            if (!title || !author || !isbn) return;
 
-            const tableBody = document.getElementById('book-list');
+            const tbody = document.getElementById('book-list');
             const row = document.createElement('tr');
 
             row.innerHTML = `
@@ -61,16 +61,14 @@
                 <td><button class="delete">Delete</button></td>
             `;
 
-            tableBody.appendChild(row);
+            tbody.appendChild(row);
 
-            // Clear inputs
             document.getElementById('title').value = '';
             document.getElementById('author').value = '';
             document.getElementById('isbn').value = '';
 
-            // Delete functionality
-            row.querySelector('.delete').addEventListener('click', function () {
-                tableBody.removeChild(row);
+            row.querySelector('.delete').addEventListener('click', function() {
+                tbody.removeChild(row);
             });
         });
     </script>
