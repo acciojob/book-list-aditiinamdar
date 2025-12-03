@@ -1,16 +1,78 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List</title>
+    <style>
+        body {font-family: Arial, sans-serif; margin: 40px; background: #f4f4f4;}
+        h1 {text-align: center;}
+        .form-group {max-width: 500px; margin: 0 auto 30px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
+        input {width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box;}
+        #anti {background:#28a745; color:white; padding:10px 20px; border:none; cursor:pointer;}
+        #anti:hover {background:#218838;}
+        table {width: 100%; max-width: 800px; margin: 0 auto; border-collapse: collapse; background: white;}
+        th, td {padding: 12px; text-align: left; border-bottom: 1px solid #ddd;}
+        th {background:#007bff; color:white;}
+        .delete {background:#dc3545; color:white; border:none; padding:6px 12px; cursor:pointer;}
+        .delete:hover {background:#c82333;}
+    </style>
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
 
+    <h1>MyBookList</h1>
+
+    <div class="form-group">
+        <input type="text" id="title" placeholder="Title" required>
+        <input type="text" id="author" placeholder="Author" required>
+        <input type="text" id="isbn" placeholder="ISBN#" required>
+        <button id="anti">Add Book</button>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>ISBN#</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="book-list">
+            <!-- rows will be added here -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('anti').addEventListener('click', function () {
+            const title = document.getElementById('title').value.trim();
+            const author = document.getElementById('author').value.trim();
+            const isbn = document.getElementById('isbn').value.trim();
+
+            if (title === '' || author === '' || isbn === '') return;
+
+            const tableBody = document.getElementById('book-list');
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${title}</td>
+                <td>${author}</td>
+                <td>${isbn}</td>
+                <td><button class="delete">Delete</button></td>
+            `;
+
+            tableBody.appendChild(row);
+
+            // Clear inputs
+            document.getElementById('title').value = '';
+            document.getElementById('author').value = '';
+            document.getElementById('isbn').value = '';
+
+            // Delete functionality
+            row.querySelector('.delete').addEventListener('click', function () {
+                tableBody.removeChild(row);
+            });
+        });
+    </script>
 </body>
-
 </html>
